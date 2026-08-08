@@ -1,0 +1,203 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  html,body{ margin:0; padding:0; background:#fff; }
+  svg{ display:block; }
+</style></head>
+<body>
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto">
+      <path d="M0,0 L8.5,4.5 L0,9 z" fill="#3A444E"/>
+    </marker>
+    <style>
+      .tab { font-family:"Segoe UI",Arial,sans-serif; font-size:13px; font-weight:700;
+             letter-spacing:2.2px; fill:#FFFFFF; }
+      .cap { font-family:"Segoe UI",Arial,sans-serif; font-size:12px; font-weight:700;
+             letter-spacing:1.3px; fill:#B4864A; }
+      .capg{ font-family:"Segoe UI",Arial,sans-serif; font-size:12px; font-weight:700;
+             letter-spacing:1.3px; fill:#6E7A85; }
+      .ttl { font-family:"Segoe UI",Arial,sans-serif; font-size:14px; font-weight:600; fill:#16324F; }
+      .sub { font-family:"Segoe UI",Arial,sans-serif; font-size:11px; fill:#5A6570; }
+      .box { fill:#fff; stroke:#C9CEC6; stroke-width:1.8; }
+      .cn  { stroke:#3A444E; stroke-width:2.2; fill:none; }
+      .pil { font-family:"Segoe UI",Arial,sans-serif; font-size:8.5px; font-weight:700;
+             letter-spacing:0.8px; fill:#FFFFFF; }
+      .rh  { font-family:"Segoe UI",Arial,sans-serif; font-size:14px; font-weight:700;
+             letter-spacing:1.8px; fill:#E0A75E; }
+      .rail{ font-family:"Segoe UI",Arial,sans-serif; font-size:11.5px; fill:#E8EDF2; }
+      .lg  { font-family:"Segoe UI",Arial,sans-serif; font-size:12px; fill:#5A6570; }
+      .hd  { font-family:"Segoe UI",Arial,sans-serif; font-size:17px; font-weight:600; fill:#16324F; }
+      .hs  { font-family:"Segoe UI",Arial,sans-serif; font-size:12px; fill:#8A96A0; }
+    </style>
+  </defs>
+
+  <text class="hd" x="20" y="26">Cloud-Based Traffic Safety Data-Fitness Pipeline</text>
+  <text class="hs" x="20" y="44">Final implementation, August 2026  ·  Group 15  ·  AWS, us-east-1  ·  four independent sources</text>
+
+  <!-- ================== band backgrounds + tabs ================== -->
+  <rect x="60" y="58"  width="840" height="252" rx="8" fill="#F3ECE0"/>
+  <rect x="60" y="324" width="840" height="160" rx="8" fill="#EEF1F3"/>
+  <rect x="60" y="498" width="840" height="160" rx="8" fill="#FBF1E2"/>
+
+  <rect x="20" y="58"  width="32" height="252" rx="5" fill="#B4864A"/>
+  <rect x="20" y="324" width="32" height="160" rx="5" fill="#8A96A0"/>
+  <rect x="20" y="498" width="32" height="160" rx="5" fill="#C77D2E"/>
+
+  <text class="tab" x="36" y="184" transform="rotate(-90 36 184)" text-anchor="middle">BRONZE · RAW</text>
+  <text class="tab" x="36" y="404" transform="rotate(-90 36 404)" text-anchor="middle">SILVER · CURATED</text>
+  <text class="tab" x="36" y="578" transform="rotate(-90 36 578)" text-anchor="middle">GOLD · READY</text>
+
+  <!-- ========================= BRONZE ========================= -->
+  <text class="cap" x="94"  y="82">INGESTION  ·  FOUR INDEPENDENT SOURCES</text>
+  <text class="cap" x="574" y="82">STORAGE</text>
+
+  <rect class="box" x="80" y="94" width="400" height="46" rx="6"/>
+  <rect x="406" y="101" width="60" height="15" rx="7.5" fill="#2E7D32"/>
+  <text class="pil" x="436" y="112" text-anchor="middle">BUILT</text>
+  <text class="ttl" x="94" y="114">Kaggle · US Accidents</text>
+  <text class="sub" x="94" y="131">7,728,394 rows · 46 columns · 3.06 GB CSV · primary source</text>
+
+  <rect class="box" x="80" y="148" width="400" height="46" rx="6"/>
+  <rect x="406" y="155" width="60" height="15" rx="7.5" fill="#2E7D32"/>
+  <text class="pil" x="436" y="166" text-anchor="middle">BUILT</text>
+  <text class="ttl" x="94" y="168">GNRC MPO · ArcGIS REST</text>
+  <text class="sub" x="94" y="185">two layers · 28,590 + 2,932 rows · paginated pull · benchmark</text>
+
+  <rect class="box" x="80" y="202" width="400" height="46" rx="6"/>
+  <rect x="406" y="209" width="60" height="15" rx="7.5" fill="#2E7D32"/>
+  <text class="pil" x="436" y="220" text-anchor="middle">BUILT</text>
+  <text class="ttl" x="94" y="222">NHTSA FARS · static archives</text>
+  <text class="sub" x="94" y="239">7,480 Tennessee fatal crashes · 2016-2022 · benchmark</text>
+
+  <rect class="box" x="80" y="256" width="400" height="46" rx="6"/>
+  <rect x="406" y="263" width="60" height="15" rx="7.5" fill="#2E7D32"/>
+  <text class="pil" x="436" y="274" text-anchor="middle">BUILT</text>
+  <text class="ttl" x="94" y="276">City of Brentwood GIS</text>
+  <text class="sub" x="94" y="293">limits polygon 42.31 sq mi · 4,010 street segments</text>
+
+  <rect x="560" y="150" width="330" height="110" rx="7" fill="#EADCC4" stroke="#B4864A" stroke-width="2"/>
+  <rect x="820" y="158" width="60" height="15" rx="7.5" fill="#2E7D32"/>
+  <text class="pil" x="850" y="169" text-anchor="middle">BUILT</text>
+  <text class="ttl" x="574" y="180">S3 Raw Zone  ·  immutable</text>
+  <text class="sub" x="574" y="204">s3://mgmt59900-blackburn-project/</text>
+  <text class="sub" x="574" y="222">raw/ · raw_mpo/ · raw_fars/ · raw_gis/</text>
+  <text class="sub" x="574" y="240">3,058,183,727 bytes verified byte-for-byte</text>
+
+  <path class="cn" d="M480,117 L554,178" marker-end="url(#a)"/>
+  <path class="cn" d="M480,171 L554,193" marker-end="url(#a)"/>
+  <path class="cn" d="M480,225 L554,208" marker-end="url(#a)"/>
+  <path class="cn" d="M480,279 L554,223" marker-end="url(#a)"/>
+
+  <!-- ========================= SILVER ========================= -->
+  <text class="capg" x="94" y="346">TRANSFORMATION</text>
+  <text class="capg" x="754" y="346">STORAGE</text>
+
+  <rect class="box" x="80" y="356" width="200" height="88" rx="6"/>
+  <rect x="212" y="364" width="60" height="15" rx="7.5" fill="#2E7D32"/>
+  <text class="pil" x="242" y="375" text-anchor="middle">BUILT</text>
+  <text class="ttl" x="94" y="398">Glue Crawler + Catalog</text>
+  <text class="sub" x="94" y="417">crash_db · schema on read</text>
+  <text class="sub" x="94" y="433">46 columns inferred</text>
+
+  <rect class="box" x="295" y="356" width="200" height="88" rx="6"/>
+  <rect x="427" y="364" width="60" height="15" rx="7.5" fill="#2E7D32"/>
+  <text class="pil" x="457" y="375" text-anchor="middle">BUILT</text>
+  <text class="ttl" x="309" y="398">Athena CTAS · Parquet</text>
+  <text class="sub" x="309" y="417">trim, cast, rename · Snappy</text>
+  <text class="sub" x="309" y="433">seed + 6 yearly appends</text>
+
+  <rect class="box" x="510" y="356" width="200" height="88" rx="6"/>
+  <rect x="642" y="364" width="60" height="15" rx="7.5" fill="#2E7D32"/>
+  <text class="pil" x="672" y="375" text-anchor="middle">BUILT</text>
+  <text class="ttl" x="524" y="398">Athena UNION · MPO</text>
+  <text class="sub" x="524" y="417">reconciles two schemas</text>
+  <text class="sub" x="524" y="433">7 shared fields of 16</text>
+
+  <rect x="740" y="356" width="150" height="88" rx="7" fill="#E3E9EE" stroke="#8A96A0" stroke-width="2"/>
+  <rect x="822" y="364" width="60" height="15" rx="7.5" fill="#2E7D32"/>
+  <text class="pil" x="852" y="375" text-anchor="middle">BUILT</text>
+  <text class="ttl" x="754" y="398">S3 Curated</text>
+  <text class="sub" x="754" y="417">443 MB · 6.9x smaller</text>
+  <text class="sub" x="754" y="433">388 partitions</text>
+
+  <path class="cn" d="M280,400 L289,400" marker-end="url(#a)"/>
+  <path class="cn" d="M495,400 L504,400" marker-end="url(#a)"/>
+  <path class="cn" d="M710,400 L734,400" marker-end="url(#a)"/>
+  <path class="cn" d="M725,262 L725,317 L68,317 L68,400 L74,400" marker-end="url(#a)"/>
+
+  <!-- ========================= GOLD ========================= -->
+  <text class="capg" x="94" y="520">QUERY / ANALYTICS</text>
+  <text class="capg" x="754" y="520">OUTPUT</text>
+
+  <rect class="box" x="80" y="530" width="200" height="88" rx="6"/>
+  <rect x="212" y="538" width="60" height="15" rx="7.5" fill="#2E7D32"/>
+  <text class="pil" x="242" y="549" text-anchor="middle">BUILT</text>
+  <text class="ttl" x="94" y="572">Athena · partitioned SQL</text>
+  <text class="sub" x="94" y="591">7.73M → TN 167,388</text>
+  <text class="sub" x="94" y="607">→ Williamson 2,009</text>
+
+  <rect class="box" x="295" y="530" width="200" height="88" rx="6"/>
+  <rect x="427" y="538" width="60" height="15" rx="7.5" fill="#2E7D32"/>
+  <text class="pil" x="457" y="549" text-anchor="middle">BUILT</text>
+  <text class="ttl" x="309" y="572">Spatial validation</text>
+  <text class="sub" x="309" y="591">point in polygon · 637 crashes</text>
+  <text class="sub" x="309" y="607">name-aware snap · median 2.6 ft</text>
+
+  <rect class="box" x="510" y="530" width="200" height="88" rx="6"/>
+  <rect x="642" y="538" width="60" height="15" rx="7.5" fill="#2E7D32"/>
+  <text class="pil" x="672" y="549" text-anchor="middle">BUILT</text>
+  <text class="ttl" x="524" y="572">Benchmark reconciliation</text>
+  <text class="sub" x="524" y="591">MPO coverage · FARS fatal</text>
+  <text class="sub" x="524" y="607">4.4% and 87.5% missing</text>
+
+  <rect x="740" y="530" width="150" height="88" rx="7" fill="#F6E3C6" stroke="#C77D2E" stroke-width="2"/>
+  <rect x="822" y="538" width="60" height="15" rx="7.5" fill="#2E7D32"/>
+  <text class="pil" x="852" y="549" text-anchor="middle">BUILT</text>
+  <text class="ttl" x="754" y="572">Deliverables</text>
+  <text class="sub" x="754" y="591">8 figures · report</text>
+  <text class="sub" x="754" y="607">GitHub repo · deck</text>
+
+  <path class="cn" d="M280,574 L289,574" marker-end="url(#a)"/>
+  <path class="cn" d="M495,574 L504,574" marker-end="url(#a)"/>
+  <path class="cn" d="M710,574 L734,574" marker-end="url(#a)"/>
+  <path class="cn" d="M815,446 L815,491 L68,491 L68,574 L74,574" marker-end="url(#a)"/>
+
+  <!-- ================== cost + governance rail ================== -->
+  <rect x="930" y="58" width="250" height="600" rx="8" fill="#2B3947"/>
+  <text class="rh" x="948" y="86">COST &amp;</text>
+  <text class="rh" x="948" y="106">GOVERNANCE</text>
+
+  <text class="rail" x="948" y="142">✓  IAM least privilege,</text>
+  <text class="rail" x="962" y="159">one bucket, 7 actions</text>
+  <text class="rail" x="948" y="188">✓  AWS Budgets alert</text>
+  <text class="rail" x="962" y="205">$20/mo, 80% threshold</text>
+  <text class="rail" x="948" y="234">✓  Region lock us-east-1</text>
+  <text class="rail" x="948" y="263">✓  Immutable raw zone,</text>
+  <text class="rail" x="962" y="280">all four sources as landed</text>
+  <text class="rail" x="948" y="309">✓  Partition pruning:</text>
+  <text class="rail" x="962" y="326">2.85 GB → 147 KB scanned,</text>
+  <text class="rail" x="962" y="343">20,252x less data read</text>
+  <text class="rail" x="948" y="372">✓  Credentials in shared</text>
+  <text class="rail" x="962" y="389">credentials file, not in code</text>
+  <text class="rail" x="948" y="418">✓  Row counts reconciled</text>
+  <text class="rail" x="962" y="435">at every stage boundary</text>
+  <text class="rail" x="948" y="464">✓  Two independent sources</text>
+  <text class="rail" x="962" y="481">corroborate the spatial join</text>
+  <text class="rail" x="948" y="510">○  Small-file compaction</text>
+  <text class="rail" x="962" y="527">deferred, 5,886 objects</text>
+  <text class="rail" x="948" y="556">○  CC BY-NC-SA credit</text>
+  <text class="rail" x="962" y="573">carried on all reuse</text>
+  <text class="rail" x="948" y="602">○  Aggregate coordinates</text>
+  <text class="rail" x="962" y="619">before any public release</text>
+
+  <!-- ========================= legend ========================= -->
+  <rect x="80" y="690" width="60" height="16" rx="8" fill="#2E7D32"/>
+  <text class="pil" x="110" y="701.5" text-anchor="middle">BUILT</text>
+  <text class="lg" x="150" y="702">running and evidenced in the final package; every component above is implemented</text>
+
+  <text class="lg" x="80" y="734">Redshift Serverless appeared in the proposal and was deliberately not pursued. Once the analysis became a data-fitness</text>
+  <text class="lg" x="80" y="752">assessment over 637 rows, a warehouse added cost without adding capability, and Athena over partitioned Parquet was sufficient.</text>
+  <text class="lg" x="80" y="778">GCP equivalents (Cloud Storage, Dataplex, BigQuery, Vertex AI) are mapped in the service table of the report.</text>
+</svg>
+</body></html>

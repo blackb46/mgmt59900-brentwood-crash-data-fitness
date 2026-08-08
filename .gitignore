@@ -1,0 +1,24 @@
+# Credentials - never commit
+credentials*
+*credentials*.txt
+*.pem
+*.key
+.env
+.aws/
+
+# Raw data - too large for Git, CC BY-NC-SA redistribution
+data/raw/
+*.zip
+US_Accidents*.csv
+
+# Python
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+~$*
+.~lock.*

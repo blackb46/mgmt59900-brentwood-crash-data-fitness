@@ -1,0 +1,17 @@
+field,rows_2010_2019,rows_2020,both_layers
+collision_ts,28590,2932,True
+crash_year,28590,2932,True
+latitude,28590,2932,True
+longitude,28590,2932,True
+in_city,28590,2932,True
+fatalities,28590,2932,True
+non_motorists,28590,2932,True
+truck_involved,28590,0,False
+serious_injuries,0,2932,False
+pedestrian,0,2932,False
+bicycle,0,2932,False
+crash_type,0,2932,False
+manner_of_collision,0,2932,False
+lighting,0,2750,False
+weather,0,2108,False
+first_harmful_event,0,2752,False
