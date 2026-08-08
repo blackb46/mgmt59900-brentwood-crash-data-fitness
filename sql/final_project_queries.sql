@@ -2,13 +2,14 @@
 -- MGMT 59900 Final Project  |  Group 15  |  Kevin Blackburn
 -- Athena DDL and analysis SQL, database crash_db, region us-east-1
 --
--- Three sources land in the same S3 bucket and are queried through the same
--- Athena catalog, which is the point: the architecture generalises.
+-- Four sources land in the same S3 bucket and are queried through the same
+-- Athena catalog, which is the point: the architecture generalizes.
 --
 --   raw/             US Accidents 2016-2023, 7,728,394 rows, 3.06 GB
 --   raw_mpo/         Nashville Area MPO police-reported crashes (GNRC open data)
 --   raw_fars/        NHTSA FARS Tennessee fatal crashes 2016-2022
 --   raw_classified/  US Accidents rows classified by Brentwood GIS
+--   raw_gis/         City of Brentwood corporate limits polygon as WKT
 --
 -- All external tables are declared as string and cast on read. The OpenCSV
 -- SerDe does not type columns, and casting explicitly keeps the intent visible.

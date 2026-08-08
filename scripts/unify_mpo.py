@@ -3,7 +3,7 @@
 
 The 2010-2019 layer and the 2020 layer publish different attributes. Rather
 than silently filling gaps, fields absent from a layer stay null and the
-coverage is documented, because it constrains what can be analysed for which
+coverage is documented, because it constrains what can be analyzed for which
 years.
 """
 import os

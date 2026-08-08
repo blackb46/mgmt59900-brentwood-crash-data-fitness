@@ -135,7 +135,7 @@ SELECT COUNT(*) AS total_rows,
 FROM crash_db.mpo_curated;
 -- expect duplicates = 0
 
--- 3. Field availability, which constrains what can be analysed for which years.
+-- 3. Field availability, which constrains what can be analyzed for which years.
 SELECT source_layer,
        COUNT(*)                        AS row_count,
        COUNT(truck_involved)           AS has_truck_flag,

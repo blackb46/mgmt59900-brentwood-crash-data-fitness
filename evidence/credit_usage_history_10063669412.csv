@@ -1,0 +1,8 @@
+Credit Usage Month,Account ID,Amount applied,Service,Status
+"2026-07","357365534145","-0.04","AmazonAthena","Finalized"
+"2026-07","357365534145","-3.69","AWSGlue","Finalized"
+"2026-07","357365534145","-0.05","AmazonKinesis","Finalized"
+"2026-07","357365534145","-0.82","AWSGlue","Finalized"
+"2026-08","357365534145","-0.03","AmazonS3","Estimated"
+"2026-08","357365534145","-0.02","AWSGlue","Estimated"
+"2026-08","357365534145","-0.13","AmazonAthena","Estimated"
