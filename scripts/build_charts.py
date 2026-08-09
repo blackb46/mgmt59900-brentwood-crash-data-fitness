@@ -63,9 +63,10 @@ b = ax.bar(cy.index.astype(int), cy.values, color=cols, width=.66)
 for r, v in zip(b, cy.values):
     ax.text(r.get_x() + r.get_width() / 2, v + 3, str(v), ha='center', fontsize=8.5,
             color=NAVY, fontname=F)
-ax.annotate('2023 partial:\ndataset ends March', xy=(2023, 33), xytext=(2021.4, 96),
-            fontsize=8.2, color='#666666', fontname=F,
-            arrowprops=dict(arrowstyle='-|>', color='#888888', lw=1))
+# Label the partial year directly above its own bar. The earlier floating
+# annotation with a leader line collided with the 2022 bar.
+ax.text(2023, 52, 'partial year\nends March', ha='center', va='bottom',
+        fontsize=8.2, color='#666666', fontname=F, linespacing=1.35)
 ax.set_ylim(0, 205)
 ax.set_ylabel('Crashes recorded', fontsize=9.5, color=NAVY, fontname=F)
 finish(ax, 'Recorded crashes grew 16-fold, which reflects coverage not risk',
