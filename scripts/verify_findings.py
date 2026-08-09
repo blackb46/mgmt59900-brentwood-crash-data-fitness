@@ -165,6 +165,49 @@ check("fields shared by both GNRC layers", len(shared), 7)
 check("crashes with a knowable collision manner",
       int(mpo_city.manner_of_collision.notna().sum()), 811)
 
+# ------------------------------- 8. sampling bias in the jurisdiction split
+print("")
+print("[8] Jurisdiction bias: national dataset versus complete regional data")
+S = streets.to_crs(2274)[["ROUTE_STAT", "ACCEPTED", "geometry"]].rename(
+    columns={"ROUTE_STAT": "s_route", "ACCEPTED": "s_acc"})
+
+
+def juris(df, lon, lat):
+    """Nearest-centerline jurisdiction split, identical method for both sources."""
+    gg = gpd.GeoDataFrame(df[[lon, lat]].copy(),
+                          geometry=[Point(x, y) for x, y in zip(df[lon], df[lat])],
+                          crs=4326).to_crs(2274)
+    jj = gpd.sjoin_nearest(gg, S, how="left", distance_col="d")
+    jj = jj[~jj.index.duplicated()]
+    lab = []
+    for rt, ac in zip(jj.s_route, jj.s_acc):
+        if rt == "INTERSTATE":
+            lab.append("interstate")
+        elif rt in ("STATE_HIGHWAY", "US_HIGHWAY"):
+            lab.append("state")
+        elif ac == "YES":
+            lab.append("city")
+        else:
+            lab.append("other")
+    vc = pd.Series(lab).value_counts()
+    n = len(jj)
+    tdot = 100 * (vc.get("interstate", 0) + vc.get("state", 0)) / n
+    return round(tdot, 1), round(100 * vc.get("city", 0) / n, 1), n
+
+
+win = ua[(ua.in_city == True) & (ua.yr.between(2016, 2020))]  # noqa: E712
+mwin = mpo[(mpo.in_city == True) & (mpo.crash_year.between(2016, 2020))]  # noqa: E712
+ua_tdot, ua_city, ua_n = juris(win, "Start_Lng", "Start_Lat")
+mp_tdot, mp_city, mp_n = juris(mwin, "longitude", "latitude")
+check("US Accidents TDOT share percent", ua_tdot, 96.1)
+check("US Accidents City share percent", ua_city, 3.6)
+check("GNRC MPO TDOT share percent", mp_tdot, 60.7)
+check("GNRC MPO City share percent", mp_city, 38.6)
+check("City exposure understatement factor", round(mp_city / ua_city, 1), 10.7, tol=0.3)
+print(f"    same window, same street network, same method; n = {ua_n} vs {mp_n}")
+print("    FARS puts 37.5% of fatal crashes on municipal streets, corroborating MPO")
+
+
 # --------------------------------------------------------------- summary
 print("\n" + "=" * 72)
 print(f"{len(PASS)} passed, {len(FAIL)} failed")

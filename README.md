@@ -22,7 +22,9 @@ roads Brentwood does not maintain.
 
 | Finding | Number |
 |---|---|
-| Crash burden on TDOT facilities, inside the corporate limits | **612 of 637, or 96.1%** |
+| Crash burden on TDOT facilities, per the **national dataset** | 612 of 637, or 96.1% |
+| Crash burden on TDOT facilities, per the **complete regional data** | **60.7%** |
+| City-maintained share: national dataset vs complete data | **3.6% vs 38.6%**, a 10.7x understatement |
 | Coverage of the national dataset against the regional MPO, 2016-2020 | **4.4%** (281 vs 6,394) |
 | Fatal crashes missed by the national dataset | **87.5%** (2 of 16 present) |
 | Fatal crashes on municipal streets, where the City has authority | **6 of 16** |
@@ -30,9 +32,18 @@ roads Brentwood does not maintain.
 | Total AWS cost of the pipeline | **$0.18 gross, $0.00 net** |
 
 **Recommendation:** source crash analytics from GNRC MPO open data rather than
-the national dataset, pursue TITAN access through Brentwood Police Department,
-and direct safety effort at MPO and TDOT funding advocacy rather than local
-capital projects.
+the national dataset, and pursue TITAN access through Brentwood Police
+Department. Advocate at MPO and TDOT for Interstate 65 and the state routes, and
+keep programming local capital projects on the City streets that carry 38.6% of
+the burden.
+
+**The sharpest finding is that the dataset is biased, not merely sparse.** Taken
+at face value it says Brentwood controls 3.6% of its crash problem, which would
+justify abandoning local safety capital entirely. The complete regional data says
+38.6%. A traffic-API feed instruments highways densely and residential streets
+barely at all, so the sample is skewed toward the facilities the City cannot
+touch. FARS corroborates the correction independently, putting 37.5% of fatal
+crashes on municipal streets.
 
 ---
 
@@ -114,7 +125,7 @@ the report from the derived extracts and the City GIS, and asserts it:
 python scripts/verify_findings.py
 ```
 
-Expected output ends with `36 passed, 0 failed`. If any assertion fails, a
+Expected output ends with `41 passed, 0 failed`. If any assertion fails, a
 number in the writeup is wrong.
 
 ### Rebuild from source
@@ -176,6 +187,9 @@ Three independent checks back the spatial method:
    crashes inside the limits, matching across all eleven years.
 3. **Row counts reconcile exactly at every stage boundary**, which is the check
    that catches silent truncation.
+4. **The jurisdiction correction is reproducible.** `verify_findings.py` section 8
+   re-runs the classification on both sources with the same window, street
+   network, and method, and asserts the 96.1 / 60.7 split.
 
 ---
 
