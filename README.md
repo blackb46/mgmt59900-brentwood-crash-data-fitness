@@ -14,9 +14,9 @@ target local traffic safety funding. Spatial validation and two independent
 benchmarks showed the primary dataset cannot support that decision, so the
 deliverable became a **data-fitness assessment** with a sourcing recommendation.
 
-The same pipeline that exposed the problem also answered the underlying
-strategic question: the crash burden Brentwood records is overwhelmingly on
-roads Brentwood does not maintain.
+The same pipeline that exposed the problem also caught a second, sharper one:
+the dataset is not merely thin, it is skewed toward the facilities the City does
+not maintain, in a way that would have inverted the strategic recommendation.
 
 ### Headline findings
 
@@ -147,6 +147,7 @@ access; steps 5 onward work from the committed extracts.
 | 10 | `fars_compare.py` | Fatal-crash comparison against FARS |
 | 11 | `dedup_audit.py` | Duplicate audit across every source |
 | 12 | `build_charts.py`, `build_figures.py` | Regenerate all figures |
+| 13 | `build_fig_jurisdiction_bias.py` | Rebuild the jurisdiction-bias comparison |
 
 ### Run the cloud SQL
 
@@ -175,9 +176,15 @@ in its early years, with 7 records in 2010 and 40 in 2011.
 fields. Collision manner and injury severity exist for one year, 2020, which is
 also the pandemic year with depressed volumes.
 
+**38.6% is a direction, not a decimal.** MPO carries no street name, so the
+corrected split uses naive nearest-centerline matching, and MPO coordinates snap
+to intersection nodes, so a crash where a City street meets a state route can
+fall either way. Neither effect explains a 96 versus 61 gap, but do not read
+38.6% as exact.
+
 ### Why the findings are trustworthy
 
-Three independent checks back the spatial method:
+Four independent checks back the findings:
 
 1. **Two independent sources agree year by year.** GNRC and FARS report
    identical fatal crash counts inside the limits for 2017 through 2020: 4, 2,
