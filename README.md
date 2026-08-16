@@ -2,7 +2,7 @@
 
 A cloud data-fitness assessment of public crash data for Brentwood, Tennessee.
 
-**MGMT 59900: Big Data Analytics in the Cloud** - Purdue MSBA - Group 15
+**MGMT 59900: Big Data Analytics in the Cloud** - Group 15
 Kevin Blackburn, P.E., GISP
 
 ---
