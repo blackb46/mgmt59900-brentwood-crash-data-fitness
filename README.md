@@ -84,7 +84,10 @@ standing cost without adding capability.
 data/derived/     analysis-ready extracts produced by the scripts below
 data/gis/         city limits polygon and street centerlines (GeoJSON)
 docs/             data inventory and the architecture diagram source
-evidence/         console screenshots: S3, Athena, catalog, billing
+evidence/         console screenshots, numbered in build order: 01-12 cover the
+                  US Accidents pipeline (S3 layout, IAM policy, Glue catalog,
+                  Athena CTAS, row reconciliation, budget alert); 13-23 cover the
+                  MPO and FARS benchmark work and the billing evidence
 figures/          every figure used in the report and presentation
 scripts/          the Python pipeline, in run order
 sql/              Athena DDL and analysis SQL
