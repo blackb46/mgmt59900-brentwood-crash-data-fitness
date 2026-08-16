@@ -10,11 +10,9 @@ Kevin Blackburn, P.E., GISP
 ## Project Scope
 
 This project started as a plan to rank crash locations in Brentwood so City staff could target local traffic safety funding. Spatial validation and two independent
-benchmarks showed the primary dataset cannot support that decision, so the
-deliverable became a **data-fitness assessment** with a sourcing recommendation.
+benchmarks showed the primary dataset cannot support that decision, so the deliverable became a **data-fitness assessment** with a sourcing recommendation.
 
-The same pipeline that exposed the problem also caught a second, sharper one:
-the dataset is not merely thin, it is skewed toward the facilities the City does
+The same pipeline that exposed the problem also caught a second, sharper one: the dataset is not merely thin, it is skewed toward the facilities the City does
 not maintain, in a way that would have inverted the strategic recommendation.
 
 ### Headline findings
