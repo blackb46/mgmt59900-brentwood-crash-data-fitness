@@ -21,25 +21,20 @@ not maintain, in a way that would have inverted the strategic recommendation.
 |---|---|
 | Crash burden on TDOT facilities, per the **national dataset** | 612 of 637, or 96.1% |
 | Crash burden on TDOT facilities, per the **complete regional data** | **60.7%** |
-| City-maintained share: national dataset vs complete data | **3.6% vs 38.6%**, a 10.7x understatement |
+| City-maintained share: national dataset vs complete data | **3.6% vs 38.6%**, a 10.7 times understatement |
 | Coverage of the national dataset against the regional MPO, 2016-2020 | **4.4%** (281 vs 6,394) |
 | Fatal crashes missed by the national dataset | **87.5%** (2 of 16 present) |
 | Fatal crashes on municipal streets, where the City has authority | **6 of 16** |
 | Error rate of name-based geographic filtering | **29.9%** |
-| Total AWS cost of the pipeline | **$0.18 gross, $0.00 net** |
+| Total AWS cost of the pipeline | **$0.18 gross, $0.00 net** (zero due to available credits on account) |
 
-**Recommendation:** source crash analytics from GNRC MPO open data rather than
-the national dataset, and pursue TITAN access through Brentwood Police
-Department. Advocate at MPO and TDOT for Interstate 65 and the state routes, and
-keep programming local capital projects on the City streets that carry 38.6% of
-the burden.
+**Recommendation:** source crash analytics from Greater Nashville Regional Council Metropolitan Planning Organization (GNRC MPO) open data rather than
+the national dataset, and pursue TITAN access through Brentwood Police Department. Advocate at MPO and TDOT for Interstate 65 and the state routes, and
+keep programming local capital projects on the City streets that carry 38.6% of the burden.
 
-**The sharpest finding is that the dataset is biased, not merely sparse.** Taken
-at face value it says Brentwood controls 3.6% of its crash problem, which would
-justify abandoning local safety capital entirely. The complete regional data says
-38.6%. A traffic-API feed instruments highways densely and residential streets
-barely at all, so the sample is skewed toward the facilities the City cannot
-touch. FARS corroborates the correction independently, putting 37.5% of fatal
+**The sharpest finding is that the dataset is biased, not merely sparse.** Taken at face value it says Brentwood controls 3.6% of its crash problem, which would
+justify abandoning local safety capital entirely. The complete regional data says 38.6%. A traffic-API feed instruments highways densely and residential streets
+barely at all, so the sample is skewed toward the facilities the City cannot touch. FARS corroborates the correction independently, putting 37.5% of fatal
 crashes on municipal streets.
 
 ---
@@ -48,20 +43,17 @@ crashes on municipal streets.
 
 ![Pipeline architecture](figures/fig_architecture.png)
 
-A bronze, silver, and gold medallion pattern on AWS in `us-east-1`. Four
-independent sources land immutable in S3. Glue crawls them into a catalog,
-Athena transforms them into partitioned Parquet, and the analytical layer runs
-SQL plus a geospatial step.
+A bronze, silver, and gold medallion pattern on AWS in `us-east-1`. Four independent sources land immutable in S3. Glue crawls them into a catalog,
+Athena transforms them into partitioned Parquet, and the analytical layer runs SQL plus a geospatial step.
 
 | Layer | Service | What happens |
 |---|---|---|
 | Bronze | S3 | Four sources landed exactly as delivered, never edited in place |
-| Silver | Glue Catalog, Athena CTAS | CSV to Snappy Parquet, 388 partitions, 6.9x smaller |
+| Silver | Glue Catalog, Athena CTAS | CSV to Snappy Parquet, 388 partitions, 6.9 times smaller |
 | Silver | Athena `UNION ALL` | The two GNRC layers reconciled onto one schema in SQL |
 | Gold | Athena, geopandas | Partitioned SQL, point-in-polygon, benchmark reconciliation |
 
-Redshift Serverless appeared in the proposal and was **deliberately not built**.
-Once validation cut the analytical universe to 637 rows, a warehouse added
+Redshift Serverless appeared in the proposal and was **deliberately not built**. Once validation cut the analytical universe to 637 rows, a warehouse added 
 standing cost without adding capability.
 
 ### Data sources
@@ -90,10 +82,8 @@ scripts/          the Python pipeline, in run order
 sql/              Athena DDL and analysis SQL
 ```
 
-The **3.06 GB raw CSV is not in this repository.** It is redistributed under
-CC BY-NC-SA and is too large for Git. Download it from
-[Kaggle](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents) if you want
-to rebuild from raw.
+The **3.06 GB raw CSV is not in this repository.** It is redistributed under CC BY-NC-SA and is too large for Git. It can be downloaded from
+[Kaggle](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents) to rebuild from the raw dataset.
 
 ---
 
@@ -105,8 +95,7 @@ source venv/Scripts/activate     # Windows Git Bash
 pip install -r requirements.txt
 ```
 
-AWS credentials are read from the shared credentials file and are never stored
-in this repository. Point boto3 at yours and use a named profile:
+AWS credentials are read from the shared credentials file and are never stored in this repository. 
 
 ```bash
 export AWS_SHARED_CREDENTIALS_FILE="$HOME/.aws/credentials"
@@ -118,24 +107,21 @@ export AWS_SHARED_CREDENTIALS_FILE="$HOME/.aws/credentials"
 
 ### Verify every published number
 
-The fastest way to confirm the findings. This recomputes each figure quoted in
-the report from the derived extracts and the City GIS, and asserts it:
+The fastest way to confirm the findings. This recomputes each figure quoted in the report from the derived extracts and the City GIS, and asserts it:
 
 ```bash
 python scripts/verify_findings.py
 ```
 
-Expected output ends with `41 passed, 0 failed`. If any assertion fails, a
-number in the writeup is wrong.
+Expected output ends with `41 passed, 0 failed`. If any assertion fails, a number in the writeup is wrong.
 
 ### Rebuild from source
 
-Scripts run in this order. Steps 1 to 4 hit external APIs and need network
-access; steps 5 onward work from the committed extracts.
+Scripts run in this order. Steps 1 to 4 hit external APIs and need network access; steps 5 onward work from the committed extracts.
 
 | # | Script | What it does |
 |---|---|---|
-| 1 | `fetch_gis.py` | Pulls the city limits polygon and street centerlines |
+| 1 | `fetch_gis.py` | Pulls the city limits polygon and street centerlines obtained from Brentwood GIS Department |
 | 2 | `validate_polygon.py` | Sanity-checks the polygon before anything trusts it |
 | 3 | `fetch_mpo.py` | Paginated pull of the two GNRC layers |
 | 4 | `fetch_fars.py` | Downloads NHTSA FARS annual files |
@@ -151,10 +137,8 @@ access; steps 5 onward work from the committed extracts.
 
 ### Run the cloud SQL
 
-`sql/02_silver_union_mpo.sql` builds the MPO silver layer in Athena and ends
-with a point-in-polygon query using `ST_Contains`. Run statements one at a time;
-Athena does not accept a multi-statement paste. The CTAS fails if its S3
-destination already holds objects, so empty `curated_mpo/` before re-running.
+`sql/02_silver_union_mpo.sql` builds the MPO silver layer in Athena and ends with a point-in-polygon query using `ST_Contains`. Run statements one at a time;
+Athena does not accept a multi-statement paste. The CTAS fails if its S3 destination already holds objects, so empty `curated_mpo/` before re-running.
 
 ---
 
@@ -162,48 +146,37 @@ destination already holds objects, so empty `curated_mpo/` before re-running.
 
 Four points matter when reading the numbers.
 
-**Severity is not injury.** The `Severity` field in US Accidents encodes traffic
-impact, meaning the delay a crash caused. It is never a measure of harm here.
+**Severity is not injury.** The `Severity` field in US Accidents encodes traffic impact, meaning the delay a crash caused. It is never a measure of harm here.
 
-**Coverage grew, risk did not.** Recorded crashes rose 16-fold from 2016 to
-2022. That is expanding sensor coverage. Any trend analysis on this dataset
+**Coverage grew, risk did not.** Recorded crashes rose 16-fold from 2016 to 2022. That is expanding sensor coverage. Any trend analysis on this dataset
 reports a safety crisis that does not exist.
 
-**Only 2016 to 2019 is a clean comparison window.** The MPO benchmark also ramps
-in its early years, with 7 records in 2010 and 40 in 2011.
+**Only 2016 to 2019 is a clean comparison window.** The MPO benchmark also ramps in its early years, with 7 records in 2010 and 40 in 2011.
 
-**The benchmark has its own limits.** The two GNRC layers share only 7 of 16
-fields. Collision manner and injury severity exist for one year, 2020, which is
+**The benchmark has its own limits.** The two GNRC layers share only 7 of 16 fields. Collision manner and injury severity exist for one year, 2020, which is
 also the pandemic year with depressed volumes.
 
-**38.6% is a direction, not a decimal.** MPO carries no street name, so the
-corrected split uses naive nearest-centerline matching, and MPO coordinates snap
-to intersection nodes, so a crash where a City street meets a state route can
-fall either way. Neither effect explains a 96 versus 61 gap, but do not read
+**38.6% is a direction, not a decimal.** MPO carries no street name, so the corrected split uses naive nearest-centerline matching, and MPO coordinates snap
+to intersection nodes, so a crash where a City street meets a state route can fall either way. Neither effect explains a 96 versus 61 gap, but do not read
 38.6% as exact.
 
 ### Why the findings are trustworthy
 
 Four independent checks back the findings:
 
-1. **Two independent sources agree year by year.** GNRC and FARS report
-   identical fatal crash counts inside the limits for 2017 through 2020: 4, 2,
+1. **Two independent sources agree year by year.** GNRC and FARS report identical fatal crash counts inside the limits for 2017 through 2020: 4, 2,
    2, 3. Four for four, from agencies using different collection processes.
-2. **Two independent geometry engines agree.** The point-in-polygon test was run
-   in Athena with `ST_Contains` and locally with geopandas. Both return 9,837
+2. **Two independent geometry engines agree.** The point-in-polygon test was run in Athena with `ST_Contains` and locally with geopandas. Both return 9,837
    crashes inside the limits, matching across all eleven years.
-3. **Row counts reconcile exactly at every stage boundary**, which is the check
-   that catches silent truncation.
-4. **The jurisdiction correction is reproducible.** `verify_findings.py` section 8
-   re-runs the classification on both sources with the same window, street
+3. **Row counts reconcile exactly at every stage boundary**, which is the check that catches silent truncation.
+4. **The jurisdiction correction is reproducible.** `verify_findings.py` section 8 re-runs the classification on both sources with the same window, street
    network, and method, and asserts the 96.1 / 60.7 split.
 
 ---
 
 ## Cost
 
-The entire pipeline billed **$0.18 gross and $0.00 net** after Free Tier
-credits. Attribution is by service and period: no other coursework used Athena
+The entire pipeline billed **$0.18 gross and $0.00 net** after Free Tier credits were used to made the total cost for my project zero. Attribution is by service and period: no other coursework used Athena
 or Glue in the August billing period.
 
 | Service | Usage | Gross |
@@ -212,42 +185,31 @@ or Glue in the August billing period.
 | Amazon S3 | 6,881 PUT, 0.211 GB-month | $0.03 |
 | AWS Glue | 0.043 crawler DPU-hours | $0.02 |
 
-Partitioning cut a single state query from **2.85 GB to 147.47 KB scanned**, a
-20,252-fold reduction. Athena bills a 10 MB minimum per query, so the **billed**
-reduction is 292-fold. Both numbers are stated because reporting only the larger
-one overstates the saving roughly seventyfold.
+Partitioning cut a single state query from **2.85 GB to 147.47 KB scanned**, a 20,252-fold reduction. Athena bills a 10 MB minimum per query, so the **billed**
+reduction is 292-fold. Both numbers are stated because reporting only the larger one overstates the saving roughly 70 times.
 
-One governance finding worth more than the cost: because credits zero out the
-net bill, a default AWS Budgets alert tracks a number that is always $0.00 and
-**would never fire**. On a credited account the only working control is gross
-usage — TB scanned, DPU-hours, request counts.
+One governance finding worth more than the cost: because credits zero out the net bill, a default AWS Budgets alert tracks a number that is always $0.00 and
+**would never fire**. On a credited account the only working control is gross usage — TB scanned, DPU-hours, request counts.
 
 ---
 
 ## Generative AI use
 
-Claude was used for code assistance, debugging, editing, and diagram
-construction, including first drafts of the spatial validation and benchmark
-scripts and the SVG source for the architecture diagram.
+Claude was used for code assistance, debugging, editing, and diagram construction, including review of drafts of the spatial validation and benchmark
+scripts and the visual diagram creation of the architecture.
 
-Everything was verified against the data rather than accepted as generated. Two
-corrections illustrate the process. The road jurisdiction classification was
-wrong twice and was corrected from professional knowledge of the network. A
-claimed corroboration between GNRC and FARS — that both reported 16 fatal
-crashes — did not survive checking, because those are different units over
-different windows and the match was coincidence; the year-by-year comparison
+Everything was verified against the data rather than accepted as generated. Two corrections illustrate the process. The road jurisdiction classification was
+wrong twice and was corrected from professional knowledge of the network. One claimed corroboration between GNRC and FARS was that both reported 16 fatal
+crashes.  This did not survive quality control review, because those are different units over different windows and the match was coincidence; the year-by-year comparison
 replaced it and is a stronger result.
 
-`scripts/verify_findings.py` exists so that no number in the writeup has to be
-taken on trust.
+`scripts/verify_findings.py` exists so that no number in the writeup has to be taken on trust.
 
 ---
 
 ## License and attribution
 
-Analysis code in this repository is provided for academic review. The US
-Accidents dataset is redistributed by its authors under **CC BY-NC-SA 4.0** and
-is not included here. GNRC MPO and NHTSA FARS data are public records. City of
-Brentwood GIS data is published by the City.
+Analysis code in this repository is provided for academic review. The US Accidents dataset is redistributed by its authors under **CC BY-NC-SA 4.0** and
+is not included here. GNRC MPO and NHTSA FARS data are public records. City of Brentwood GIS data is published and maintained by the City.
 
 > Moosavi, Sobhan, et al. *A Countrywide Traffic Accident Dataset.* 2019.
