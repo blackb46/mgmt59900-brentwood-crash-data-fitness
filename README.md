@@ -7,10 +7,9 @@ Kevin Blackburn, P.E., GISP
 
 ---
 
-## What this project is
+## Project Scope
 
-This started as a plan to rank crash locations in Brentwood so the City could
-target local traffic safety funding. Spatial validation and two independent
+This project started as a plan to rank crash locations in Brentwood so City staff could target local traffic safety funding. Spatial validation and two independent
 benchmarks showed the primary dataset cannot support that decision, so the
 deliverable became a **data-fitness assessment** with a sourcing recommendation.
 
