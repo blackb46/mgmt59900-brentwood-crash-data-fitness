@@ -128,10 +128,14 @@ vals, colors = [612, 225, 25], [CITY, INTER, STATE]
 b = ax.barh([0], [612], color=CITY, height=.5, label='Correct')
 ax.barh([0], [225], left=[612], color=INTER, height=.5)
 ax.barh([0], [25], left=[837], color=STATE, height=.5)
-ax.set_xlim(0, 900); ax.set_yticks([])
-for x, w, t in [(306, 612, '612 correct'), (724, 225, '225 wrongly included'), (849, 25, '25 missed')]:
+ax.set_xlim(0, 1000); ax.set_yticks([])
+for x, t in [(306, '612 correct'), (724, '225 wrongly included')]:
     ax.text(x, 0, t, ha='center', va='center', fontsize=9,
-            color='white' if w > 100 else NAVY, fontweight='bold', fontname=F)
+            color='white', fontweight='bold', fontname=F)
+# The 25-wide segment is far too narrow to hold a nine-character label; centring
+# it there ran the text back over '225 wrongly included', so it sits outside.
+ax.annotate('25 missed', xy=(862, 0), xytext=(880, 0), ha='left', va='center',
+            fontsize=9, color=NAVY, fontweight='bold', fontname=F)
 finish(ax, 'The name-based filter was wrong about 30 percent of the time',
        'County + city text filter returned 837 crashes. Point-in-polygon against the corporate limits returned 637.')
 ax.set_xlabel('Crashes', fontsize=9.5, color=NAVY, fontname=F)
